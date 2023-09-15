@@ -17,12 +17,6 @@ public class ai_1 : MonoBehaviour
 
     private float pathUpateDeadlind;
 
-    private float shooting_distance;
-
-    public float walking_distance;
-
-    public get_hit hp;
-
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -32,32 +26,11 @@ public class ai_1 : MonoBehaviour
     void Start()
     {
         start_pos = transform.position;
-        shooting_distance = navMeshAgent.stoppingDistance;
+
     }
 
-    void Update()
-    {
-        if (target != null)
-        {
-            bool inAttackRange = Vector3.Distance(transform.position, target.position) <= shooting_distance;
-            bool inWalkRange = Vector3.Distance(transform.position, target.position) <= walking_distance;
-
-            if (inAttackRange)
-            {
-                LookAtTarget();
-            }
-            if (inWalkRange && hp.hp > hp.max_hp / 100 * 20)
-            {
-                UpdatePath();
-            }
-            else
-            {
-                WalkBack();
-            }
-        }
-    }
-
-    private void LookAtTarget()
+    //this to the next comment is all moving so this is fine
+    public void LookAtTarget()
     {
         Vector3 lookPos = target.position - transform.position;
         lookPos.y = 0;
@@ -66,7 +39,7 @@ public class ai_1 : MonoBehaviour
         Attack();
     }
 
-    private void UpdatePath()
+    public void UpdatePath()
     {
         if(Time.time >= pathUpateDeadlind)
         {
@@ -76,15 +49,14 @@ public class ai_1 : MonoBehaviour
         }
     }
 
-    private void WalkBack()
+    public void WalkBack()
     {
         Debug.Log("walkback");
         navMeshAgent.SetDestination(start_pos);
     }
 
-    [System.Obsolete]
+    //this attach part does noting but still should have been in a difrent script
     private void Attack()
     {
-        attack.active = true;
     }
 }
